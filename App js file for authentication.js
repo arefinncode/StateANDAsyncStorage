@@ -8,9 +8,9 @@ import {
     View,
 } from 'react-native';
 import { StackNavigator, SwitchNavigator } from 'react-navigation'; // Version can be specified in package.json
-import {AppState, Text} from 'react-native'
 
-/*
+
+
 
 class SignInScreen extends React.Component {
     static navigationOptions = {
@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
 
 const AppStack = StackNavigator({ Home: HomeScreen, Other: OtherScreen });
 const AuthStack = StackNavigator({ SignIn: SignInScreen });
-*/
+
 /*
 
 export default SwitchNavigator(
@@ -157,50 +157,16 @@ export default SwitchNavigator(
 */
 
 
-// const RootStack=SwitchNavigator(
-//     {
-//         AuthLoading: AuthLoadingScreen,
-//         App: AppStack,
-//         Auth: AuthStack,
-//     },
-//     {
-//         initialRouteName: 'AuthLoading',
-//     }
-// );
-
-
-class AppStateExample extends React.Component {
-
-    state = {
-        appState: AppState.currentState
+const RootStack=SwitchNavigator(
+    {
+        AuthLoading: AuthLoadingScreen,
+        App: AppStack,
+        Auth: AuthStack,
+    },
+    {
+        initialRouteName: 'AuthLoading',
     }
-
-    componentDidMount() {
-        console.log("at  componentDidMount")
-        AppState.addEventListener('change', this._handleAppStateChange);
-    }
-
-    componentWillUnmount() {
-        console.log("before componentWillUnmount")
-        AppState.removeEventListener('change', this._handleAppStateChange);
-    }
-
-    _handleAppStateChange = (nextAppState) => {
-        if (this.state.appState.match(/inactive|background/) && nextAppState === 'active') {
-            console.log('App has come to the foreground!')
-        }
-        console.log("this handler also executed when component did unmounted by keeping the app in bkground");
-        this.setState({appState: nextAppState});
-    }
-
-    render() {
-        console.log("Current state is: ",this.state.appState);
-        return (
-            <Text>Current state is: {this.state.appState}</Text>
-        );
-    }
-
-}
+);
 
 export default class App extends React.Component {
 
@@ -208,25 +174,23 @@ export default class App extends React.Component {
 
     componentWillmount(){
 
-        console.log("componentWillmount");
-
 
     }
     componentDidMount() {
-        console.log("componentDidMount");
+        console.log("111");
         console.disableYellowBox = true;
     }
 
     componentWillUnmount() {
 
-        console.log("componentWillUnmount");
+        console.log("2");
 
         //console.disableYellowBox = true;
     }
 
 
     render() {
-        return <AppStateExample/>;
+        return <RootStack/>;
     }
 
 
