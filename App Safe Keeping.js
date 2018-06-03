@@ -11,7 +11,7 @@ import {
     Platform,
     StyleSheet,
     Text,
-    View,Button,Image
+    View,Button,Image,AsyncStorage
 } from 'react-native';
 import { AppRegistry} from 'react-native';
 import { createSwitchNavigator, createBottomTabNavigator, createStackNavigator} from 'react-navigation';
@@ -157,14 +157,28 @@ const RootStack=createBottomTabNavigator(
 
 export default class App extends React.Component {
 
-
-
     componentWillmount(){
 
+        try {
+            console.log("At componentWillmount()");
 
+            AsyncStorage.setItem('@MySuperStore:key', 'I like to save it.');
+        } catch (error) {
+            // Error saving data
+        }
     }
     componentDidMount() {
-        console.log("111");
+
+        try {
+            const value = AsyncStorage.getItem('@MySuperStore:key');
+            if (value !== null){
+                // We have data!!
+                console.log(value);
+            }
+        } catch (error) {
+            // Error retrieving data
+        }
+        console.log("At componentDidMount()");
         console.disableYellowBox = true;
     }
 
